@@ -56,7 +56,7 @@ ibmcloud cf install --force
 echo ">> terraform provider"
 mkdir -p /root/.terraform.d/plugins/linux_amd64
 
-echo ">>> 0.29.0"
+echo ">>> 0.x"
 curl -LO $(get_most_recent_matching "IBM-Cloud/terraform-provider-ibm" ".*v0.*linux_amd64.*")
 unzip linux_amd64.zip -d /root/.terraform.d/plugins/linux_amd64
 rm -f linux_amd64.zip
