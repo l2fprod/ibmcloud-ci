@@ -1,4 +1,4 @@
-FROM alpine:3.10.0
+FROM alpine:3.12
 
 COPY install-base.sh install-base.sh
 COPY install-ibmcloud.sh install-ibmcloud.sh

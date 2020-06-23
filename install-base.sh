@@ -1,3 +1,28 @@
+set -e
+export SHELLOPTS
+
+function get_latest {
+  latest_content=$(curl -H "Authorization: token $GITHUB_TOKEN" --silent "https://api.github.com/repos/$1/releases/latest")
+  latest_url=$(echo $latest_content | jq -r '.assets[] | select(.browser_download_url | test("'$2'")) | .browser_download_url')
+  if [ ! -z "$latest_url" ]; then
+    echo $latest_url
+  else
+    echo "Failed to get $1: $latest_content"
+    exit 2
+  fi
+}
+
+function get_most_recent_matching {
+  releases=$(curl -H "Authorization: token $GITHUB_TOKEN" --silent "https://api.github.com/repos/$1/releases")
+  most_recent_matching=$(echo -E $releases | jq -r '.[] | .assets | .[] | select(.browser_download_url | test("'$2'")) | .browser_download_url' | head -n 1)
+  if [ ! -z "$most_recent_matching" ]; then
+    echo $most_recent_matching
+  else
+    echo "Failed to get $1: $releases"
+    exit 2
+  fi
+}
+
 echo "Installing base dependencies..."
 apk add --no-cache \
   bash \
@@ -31,22 +56,30 @@ apk add --no-cache \
 # pip install virtualenv
 
 # Terraform
-echo ">> Terraform"
-curl -LO "https://releases.hashicorp.com/terraform/0.11.14/terraform_0.11.14_linux_amd64.zip" && \
-  unzip terraform*.zip && \
-  rm -f terraform*.zip && \
-  chmod 755 terraform && \
-  mv terraform /usr/local/bin
+echo "Terraform (latest)"
+latest_terraform_version=$(curl -s https://checkpoint-api.hashicorp.com/v1/check/terraform | jq -r -M '.current_version')
+curl -LO "https://releases.hashicorp.com/terraform/${latest_terraform_version}/terraform_${latest_terraform_version}_linux_amd64.zip"
+unzip terraform_${latest_terraform_version}_linux_amd64.zip terraform
+mv terraform /usr/local/bin/terraform-${latest_terraform_version}
+rm -f terraform_${latest_terraform_version}_linux_amd64.zip
+ln -s /usr/local/bin/terraform-${latest_terraform_version} /usr/local/bin/terraform-latest
+ln -s /usr/local/bin/terraform-${latest_terraform_version} /usr/local/bin/terraform
+
+echo "Terraform (0.11.14)"
+curl -LO "https://releases.hashicorp.com/terraform/0.11.14/terraform_0.11.14_linux_amd64.zip"
+unzip terraform_0.11.14_linux_amd64.zip terraform
+mv terraform /usr/local/bin/terraform-0.11.14
+rm -f terraform_0.11.14_linux_amd64.zip
 
 # Kubernetes
-# echo ">> kubectl"
-# curl -LO https://storage.googleapis.com/kubernetes-release/release/$(curl --retry 10 --retry-delay 5 -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl
-# mv kubectl /usr/local/bin/kubectl
-# chmod +x /usr/local/bin/kubectl
+echo ">> kubectl"
+curl -LO https://storage.googleapis.com/kubernetes-release/release/$(curl --retry 10 --retry-delay 5 -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl
+mv kubectl /usr/local/bin/kubectl
+chmod +x /usr/local/bin/kubectl
 
 # Helm
-# echo ">> helm"
-# curl https://raw.githubusercontent.com/kubernetes/helm/master/scripts/get | bash
+echo ">> helm"
+curl https://raw.githubusercontent.com/kubernetes/helm/master/scripts/get | bash
 
 # NVM for Node.JS
 # apk add nodejs npm
