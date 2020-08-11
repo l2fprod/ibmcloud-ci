@@ -56,8 +56,8 @@ apk add --no-cache \
 # pip install virtualenv
 
 # Terraform
-echo "Terraform (latest)"
-latest_terraform_version=$(curl -s https://checkpoint-api.hashicorp.com/v1/check/terraform | jq -r -M '.current_version')
+latest_terraform_version="0.12.29"
+echo "Terraform ($latest_terraform_version -- marking as latest)"
 curl -LO "https://releases.hashicorp.com/terraform/${latest_terraform_version}/terraform_${latest_terraform_version}_linux_amd64.zip"
 unzip terraform_${latest_terraform_version}_linux_amd64.zip terraform
 mv terraform /usr/local/bin/terraform-${latest_terraform_version}
