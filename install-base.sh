@@ -33,6 +33,7 @@ apk add --no-cache \
   gettext \
   grep \
   jq \
+  make \
   openssl \
   openssh-client \
   sudo
