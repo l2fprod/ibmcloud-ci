@@ -25,6 +25,7 @@ function get_most_recent_matching {
 
 echo "Installing base dependencies..."
 apk add --no-cache \
+  ansible \
   bash \
   binutils \
   ca-certificates \
@@ -36,6 +37,7 @@ apk add --no-cache \
   make \
   openssl \
   openssh-client \
+  openvpn \
   sudo
 
 # modules not needed
