@@ -13,6 +13,7 @@ RUN mkdir /app
 FROM scratch
 COPY --from=builder / /
 COPY .bash_profile /root
+COPY .bash_aliases /root
 VOLUME /app
 ENV TERM xterm-256color
 WORKDIR /app
