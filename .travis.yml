@@ -3,6 +3,7 @@ services:
   - docker
 
 before_install:
+  - docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD";
   - ./build.sh
 
 script:
@@ -11,6 +12,5 @@ script:
 after_success:
   - echo "Current branch is ${TRAVIS_PULL_REQUEST_BRANCH:-$TRAVIS_BRANCH}"
   - if [ "${TRAVIS_PULL_REQUEST_BRANCH:-$TRAVIS_BRANCH}" == "master" ]; then
-    docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD";
     ./push.sh;
     fi
