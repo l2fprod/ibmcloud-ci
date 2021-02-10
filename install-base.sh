@@ -1,28 +1,6 @@
 set -e
 export SHELLOPTS
 
-function get_latest {
-  latest_content=$(curl -H "Authorization: token $GITHUB_TOKEN" --silent "https://api.github.com/repos/$1/releases/latest")
-  latest_url=$(echo $latest_content | jq -r '.assets[] | select(.browser_download_url | test("'$2'")) | .browser_download_url')
-  if [ ! -z "$latest_url" ]; then
-    echo $latest_url
-  else
-    echo "Failed to get $1: $latest_content"
-    exit 2
-  fi
-}
-
-function get_most_recent_matching {
-  releases=$(curl -H "Authorization: token $GITHUB_TOKEN" --silent "https://api.github.com/repos/$1/releases")
-  most_recent_matching=$(echo -E $releases | jq -r '.[] | .assets | .[] | select(.browser_download_url | test("'$2'")) | .browser_download_url' | head -n 1)
-  if [ ! -z "$most_recent_matching" ]; then
-    echo $most_recent_matching
-  else
-    echo "Failed to get $1: $releases"
-    exit 2
-  fi
-}
-
 echo "Installing base dependencies..."
 apk add --no-cache \
   ansible \
@@ -58,22 +36,6 @@ apk add --no-cache \
 #  figlet \
 #  zip
 # pip install virtualenv
-
-# Terraform
-latest_terraform_version="0.12.29"
-echo "Terraform ($latest_terraform_version -- marking as latest)"
-curl -LO "https://releases.hashicorp.com/terraform/${latest_terraform_version}/terraform_${latest_terraform_version}_linux_amd64.zip"
-unzip terraform_${latest_terraform_version}_linux_amd64.zip terraform
-mv terraform /usr/local/bin/terraform-${latest_terraform_version}
-rm -f terraform_${latest_terraform_version}_linux_amd64.zip
-ln -s /usr/local/bin/terraform-${latest_terraform_version} /usr/local/bin/terraform-latest
-ln -s /usr/local/bin/terraform-${latest_terraform_version} /usr/local/bin/terraform
-
-echo "Terraform (0.11.14)"
-curl -LO "https://releases.hashicorp.com/terraform/0.11.14/terraform_0.11.14_linux_amd64.zip"
-unzip terraform_0.11.14_linux_amd64.zip terraform
-mv terraform /usr/local/bin/terraform-0.11.14
-rm -f terraform_0.11.14_linux_amd64.zip
 
 echo "TFSwitch"
 wget -q -O /etc/apk/keys/sgerrand.rsa.pub https://alpine-pkgs.sgerrand.com/sgerrand.rsa.pub
