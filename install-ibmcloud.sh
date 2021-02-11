@@ -31,3 +31,5 @@ do
   ibmcloud plugin install $plugin -f -r "IBM Cloud"
 done
 ibmcloud cf install --force
+
+rm -rf /root/.bluemix/tmp /tmp/*
