@@ -36,6 +36,13 @@ chmod +x /usr/local/bin/kubectl
 echo ">> helm"
 curl https://raw.githubusercontent.com/kubernetes/helm/master/scripts/get | bash
 
+# OpenShift CLI
+echo ">> OpenShift"
+curl -LO https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/ocp/stable/openshift-client-linux.tar.gz
+tar zxvf openshift-client-linux.tar.gz
+mv oc /usr/local/bin/oc
+rm -rf README.md kubectl openshift-client-linux.tar.gz
+
 # MC for S3
 echo ">> minio"
 wget -O /usr/local/bin/mc https://dl.min.io/client/mc/release/linux-amd64/mc
