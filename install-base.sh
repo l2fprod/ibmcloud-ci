@@ -11,6 +11,7 @@ apk add --no-cache \
   curl \
   docker-cli \
   gettext \
+  git \
   grep \
   jq \
   make \
