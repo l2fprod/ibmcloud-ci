@@ -7,3 +7,5 @@ if [ ! -z "$SHOW_VERSIONS" ]; then
   ibmcloud version
   ibmcloud plugin list
 fi
+
+eval "$(direnv hook bash)"
