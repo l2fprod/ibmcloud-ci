@@ -54,8 +54,8 @@ mv calicoctl-linux-amd64 /usr/local/bin/calicoctl
 chmod +x /usr/local/bin/calicoctl
 
 # Helm
-echo ">> helm"
-curl https://raw.githubusercontent.com/kubernetes/helm/master/scripts/get | bash
+echo ">> helm 3"
+curl https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3 | bash
 
 # OpenShift CLI
 echo ">> OpenShift"
