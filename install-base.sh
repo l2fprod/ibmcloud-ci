@@ -30,9 +30,7 @@ apk add --no-cache \
   openssh-client \
   openvpn \
   sudo
-apk add --no-cache \
-  -X http://dl-cdn.alpinelinux.org/alpine/edge/testing \
-  direnv
+curl -sfL https://direnv.net/install.sh | bash
 
 echo "TFSwitch"
 wget -q -O /etc/apk/keys/sgerrand.rsa.pub https://alpine-pkgs.sgerrand.com/sgerrand.rsa.pub
