@@ -9,3 +9,7 @@ if [ ! -z "$SHOW_VERSIONS" ]; then
 fi
 
 eval "$(direnv hook bash)"
+
+# disable Terraform calling home
+# https://www.terraform.io/docs/cli/commands/index.html#upgrade-and-security-bulletin-checks
+export CHECKPOINT_DISABLE=true
