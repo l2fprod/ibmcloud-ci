@@ -29,7 +29,8 @@ apk add --no-cache \
   openssl \
   openssh-client \
   openvpn \
-  sudo
+  sudo \
+  tcpdump
 curl -sfL https://direnv.net/install.sh | bash
 
 echo "TFSwitch"
