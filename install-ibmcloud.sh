@@ -4,7 +4,7 @@ export SHELLOPTS
 
 # IBM Cloud CLI
 echo ">> ibmcloud"
-curl -fsSL https://clis.ng.bluemix.net/install/linux > /tmp/bxinstall.sh
+curl -fsSL https://clis.cloud.ibm.com/install/linux > /tmp/bxinstall.sh
 sh /tmp/bxinstall.sh
 rm /tmp/bxinstall.sh
 
