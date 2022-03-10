@@ -1,4 +1,4 @@
-FROM node:14-alpine3.12 as builder
+FROM node:14-alpine3.14 as builder
 
 COPY install-base.sh install-base.sh
 COPY install-ibmcloud.sh install-ibmcloud.sh
