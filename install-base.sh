@@ -29,6 +29,7 @@ apk add --no-cache \
   openssl \
   openssh-client \
   openvpn \
+  packer \
   sudo \
   tcpdump
 curl -sfL https://direnv.net/install.sh | bash
