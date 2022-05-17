@@ -34,11 +34,12 @@ apk add --no-cache \
   tcpdump
 curl -sfL https://direnv.net/install.sh | bash
 
-echo "Terraform"
-curl -LO https://releases.hashicorp.com/terraform/1.1.9/terraform_1.1.9_linux_amd64.zip
-unzip terraform_1.1.9_linux_amd64.zip
-mv terraform /usr/local/bin/terraform
-chmod +x /usr/local/bin/terraform
+# for when tfswitch is broken
+# echo "Terraform"
+# curl -LO https://releases.hashicorp.com/terraform/1.1.9/terraform_1.1.9_linux_amd64.zip
+# unzip terraform_1.1.9_linux_amd64.zip
+# mv terraform /usr/local/bin/terraform
+# chmod +x /usr/local/bin/terraform
 
 echo "TFSwitch"
 wget -q -O /etc/apk/keys/sgerrand.rsa.pub https://alpine-pkgs.sgerrand.com/sgerrand.rsa.pub
