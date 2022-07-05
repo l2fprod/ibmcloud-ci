@@ -76,5 +76,8 @@ echo ">> minio"
 wget -O /usr/local/bin/mc https://dl.min.io/client/mc/release/linux-amd64/mc
 chmod +x /usr/local/bin/mc
 
+# Enable GIT for all directories to avoid prompt like `fatal: unsafe repository ('/app' is owned by someone else)`
+git config --global --add safe.directory '*'
+
 # Clean up
 rm -rf /var/cache/apk/*
