@@ -1,7 +1,7 @@
 if [ ! -z "$SHOW_VERSIONS" ]; then
   echo "
   >>> Tools"
-  kubectl version --client=true
+  kubectl version -o yaml
   helm version -c
 
   ibmcloud version
