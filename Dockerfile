@@ -1,5 +1,6 @@
 FROM node:14-alpine3.14 as builder
 
+ENV LANG en_US.UTF-8
 COPY install-base.sh install-base.sh
 COPY install-ibmcloud.sh install-ibmcloud.sh
 ARG GITHUB_TOKEN
@@ -16,5 +17,6 @@ COPY .bash_profile /root
 COPY .bash_aliases /root
 VOLUME /app
 ENV TERM xterm-256color
+ENV LANG en_US.UTF-8
 WORKDIR /app
 ENTRYPOINT [ "bash", "-l" ]
