@@ -1,4 +1,4 @@
-FROM node:14-alpine3.14 as builder
+FROM node:19-alpine as builder
 
 ENV LANG en_US.UTF-8
 COPY install-base.sh install-base.sh
