@@ -23,6 +23,7 @@ ibmcloud_plugins=( \
   key-protect \
   power-iaas \
   schematics \
+  sl \
   tg \
   tke \
 )
