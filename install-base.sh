@@ -21,6 +21,7 @@ apk add --no-cache \
   coreutils \
   curl \
   docker-cli \
+  gcompat \
   gettext \
   git \
   grep \
