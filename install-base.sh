@@ -1,5 +1,8 @@
+#!/bin/bash
 set -e
 export SHELLOPTS
+export DEBIAN_FRONTEND=noninteractive
+export LANG=C.UTF-8
 
 function get_latest {
   latest_content=$(curl -H "Authorization: token $GITHUB_TOKEN" --silent "https://api.github.com/repos/$1/releases/latest")
@@ -12,21 +15,21 @@ function get_latest {
   fi
 }
 
-echo "Installing base dependencies..."
-apk add --no-cache \
+echo ">> Installing dependencies..."
+apt-get -qq update
+PACKAGES=(
   ansible \
   bash \
   binutils \
   ca-certificates \
   coreutils \
   curl \
-  docker-cli \
-  gcompat \
+  direnv
   gettext \
   git \
+  gnupg \
   grep \
   jq \
-  libc6-compat \
   make \
   openssl \
   openssh-client \
@@ -34,7 +37,26 @@ apk add --no-cache \
   packer \
   sudo \
   tcpdump
-curl -sfL https://direnv.net/install.sh | bash
+)
+
+for package in "${PACKAGES[@]}"; do
+  echo "Processing $package..."
+  apt-get install -qq -y $package || true
+done
+
+# Docker in Docker | https://docs.docker.com/engine/install/ubuntu/
+echo ">> Docker in Docker"
+apt remove docker.io docker-doc docker-compose docker-compose-v2 podman-docker containerd runc || true
+apt-get install -yy  
+install -m 0755 -d /etc/apt/keyrings
+curl -fsSL https://download.docker.com/linux/ubuntu/gpg | gpg --dearmor -o /etc/apt/keyrings/docker.gpg
+chmod a+r /etc/apt/keyrings/docker.gpg
+echo \
+  "deb [arch="$(dpkg --print-architecture)" signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu \
+  "$(. /etc/os-release && echo "$VERSION_CODENAME")" stable" | \
+  tee /etc/apt/sources.list.d/docker.list > /dev/null
+apt-get update
+apt-get install -yy docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
 
 # for when tfswitch is broken
 # echo "Terraform"
@@ -78,4 +100,4 @@ chmod +x /usr/local/bin/mc
 git config --global --add safe.directory '*'
 
 # Clean up
-rm -rf /var/cache/apk/*
+apt-get clean

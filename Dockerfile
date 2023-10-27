@@ -1,4 +1,4 @@
-FROM node:19-alpine as builder
+FROM ubuntu:22.04 as builder
 
 ENV LANG en_US.UTF-8
 COPY install-base.sh install-base.sh
