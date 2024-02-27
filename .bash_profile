@@ -15,4 +15,4 @@ eval "$(direnv hook bash)"
 export CHECKPOINT_DISABLE=true
 
 # tofuenv
-export PATH="$HOME/.tofuenv/bin:$PATH"
+export PATH="$PATH:$HOME/.tofuenv/bin"
