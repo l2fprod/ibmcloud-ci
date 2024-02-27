@@ -35,7 +35,8 @@ PACKAGES=(
   openssh-client \
   openvpn \
   sudo \
-  tcpdump
+  tcpdump \
+  unzip
 )
 
 for package in "${PACKAGES[@]}"; do
@@ -72,6 +73,9 @@ apt install -yy packer
 
 echo "TFSwitch"
 curl -L https://raw.githubusercontent.com/warrensbox/terraform-switcher/release/install.sh | bash
+
+echo "tofuenv"
+git clone --depth=1 https://github.com/tofuutils/tofuenv.git ~/.tofuenv
 
 # Kubernetes
 echo ">> kubectl"
