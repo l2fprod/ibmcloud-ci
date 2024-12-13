@@ -14,7 +14,6 @@ ibmcloud_plugins=( \
   code-engine \
   cloud-databases \
   cloud-dns-services \
-  cloud-functions \
   cloud-internet-services \
   cloud-object-storage \
   container-registry \
